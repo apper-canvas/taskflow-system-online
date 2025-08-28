@@ -275,9 +275,9 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
                   className="bg-gradient-to-r from-error-500 to-error-600 h-2 rounded-full transition-all duration-700 ease-out"
-                  style={{ width: `${stats.highPriority > 0 ? Math.round(((stats.highPriorityCompleted || 0) / stats.highPriority) * 100) : 0}%` }}
+style={{ width: `${stats.highPriority > 0 ? Math.round(((stats.highPriorityCompleted || 0) / stats.highPriority) * 100) : 0}%` }}
                 />
-</div>
+              </div>
             </div>
           )}
         </div>
