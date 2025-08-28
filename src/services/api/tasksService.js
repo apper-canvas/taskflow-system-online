@@ -22,11 +22,15 @@ class TasksService {
   async create(taskData) {
 await this.delay(400);
     const newTask = {
-      Id: this.getNextId(),
+Id: this.getNextId(),
       ...taskData,
       completed: false,
       createdAt: new Date().toISOString(),
       completedAt: null,
+      // Productivity tracking
+      estimatedTime: taskData.estimatedTime || null,
+      actualTime: null,
+      productivity: null,
       // Recurrence fields
       isRecurring: taskData.isRecurring || false,
       recurrencePattern: taskData.recurrencePattern || null,
@@ -62,10 +66,24 @@ await this.delay(400);
       this.tasks[index].recurrenceEndAfter = updates.recurrenceEndAfter || null;
     }
     
-    if (updates.completed !== undefined) {
+if (updates.completed !== undefined) {
       this.tasks[index].completedAt = updates.completed 
         ? new Date().toISOString() 
         : null;
+      
+      // Calculate productivity metrics when task is completed
+      if (updates.completed && this.tasks[index].createdAt) {
+        const created = new Date(this.tasks[index].createdAt);
+        const completed = new Date();
+        const actualTime = Math.round((completed - created) / (1000 * 60 * 60)); // hours
+        this.tasks[index].actualTime = actualTime;
+        
+        if (this.tasks[index].estimatedTime) {
+          this.tasks[index].productivity = Math.round(
+            (this.tasks[index].estimatedTime / actualTime) * 100
+          );
+        }
+      }
     }
     
     return { ...this.tasks[index] };
@@ -81,7 +99,7 @@ await this.delay(400);
     return true;
   }
 
-  async getTasksByView(view) {
+async getTasksByView(view) {
     await this.delay(300);
     const allTasks = [...this.tasks];
     const today = new Date();
@@ -103,9 +121,33 @@ await this.delay(400);
         );
       case "completed":
         return allTasks.filter(task => task.completed);
+      case "all":
+        return allTasks; // Return all tasks for comprehensive statistics
       default:
         return allTasks.filter(task => !task.completed);
     }
+  }
+
+  // Get productivity statistics
+  async getProductivityStats() {
+    await this.delay(200);
+    const allTasks = [...this.tasks];
+    const completedTasks = allTasks.filter(task => task.completed);
+    const today = new Date();
+    const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+    
+    const recentCompletions = completedTasks.filter(task => 
+      task.completedAt && new Date(task.completedAt) >= weekAgo
+    );
+    
+    return {
+      totalCompleted: completedTasks.length,
+      weeklyCompletions: recentCompletions.length,
+      avgProductivity: completedTasks.reduce((acc, task) => 
+        acc + (task.productivity || 100), 0) / (completedTasks.length || 1),
+      avgCompletionTime: completedTasks.reduce((acc, task) => 
+        acc + (task.actualTime || 0), 0) / (completedTasks.length || 1)
+    };
   }
 
   async searchTasks(query) {

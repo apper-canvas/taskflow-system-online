@@ -17,7 +17,7 @@ const Sidebar = ({
       <div className="p-6 space-y-8">
         {/* Quick Stats */}
         <div>
-          <TaskStats stats={stats} />
+<TaskStats stats={stats} />
         </div>
 
         {/* Filters Section */}

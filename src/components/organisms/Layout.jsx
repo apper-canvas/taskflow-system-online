@@ -12,14 +12,17 @@ const Layout = () => {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
 
-  const { tasks: allTasks, createTask, updateTask } = useTasks("all");
+const { tasks: allTasks, createTask, updateTask, calculateStats } = useTasks("all");
 
-  // Calculate stats
-  const stats = {
+  // Calculate comprehensive stats with productivity metrics
+  const stats = calculateStats ? calculateStats(allTasks) : {
     total: allTasks.length,
     completed: allTasks.filter(task => task.completed).length,
     pending: allTasks.filter(task => !task.completed).length,
-    highPriority: allTasks.filter(task => task.priority === "high" && !task.completed).length
+    highPriority: allTasks.filter(task => task.priority === "high" && !task.completed).length,
+    weeklyCompletion: [0, 0, 0, 0, 0, 0, 0],
+    velocity: 0,
+    avgCompletionTime: 0
   };
 
   const handleSearch = useCallback((query) => {
@@ -69,7 +72,7 @@ const Layout = () => {
     <div className="min-h-screen bg-gray-50 flex">
       {/* Desktop Sidebar */}
       <Sidebar
-        stats={stats}
+stats={stats}
         selectedCategories={selectedCategories}
         selectedPriorities={selectedPriorities}
         onCategoryToggle={handleCategoryToggle}
@@ -87,7 +90,7 @@ const Layout = () => {
         {/* Page Content */}
         <main className="flex-1 p-6">
           <Outlet context={{
-            searchQuery,
+searchQuery,
             selectedCategories,
             selectedPriorities,
             onEditTask: handleEditTask,
