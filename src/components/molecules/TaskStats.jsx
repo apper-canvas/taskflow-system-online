@@ -282,14 +282,14 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
           )}
         </div>
         
-        <div className="mt-4 pt-4 border-t border-gray-100">
+<div className="mt-4 pt-4 border-t border-gray-100">
           <div className="flex items-center justify-between text-sm">
             <span className="text-gray-600">Productivity Score</span>
             <span className="font-semibold text-primary-600">{Math.min(Math.round(completionRate * 1.2), 100)}%</span>
           </div>
         </div>
       </div>
-</div>
+    </div>
   );
 };
 
