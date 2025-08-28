@@ -1,0 +1,112 @@
+[
+  {
+    "Id": 1,
+    "title": "Review quarterly marketing report",
+    "description": "Analyze performance metrics and prepare recommendations for next quarter strategy",
+    "priority": "high",
+    "category": "work",
+    "dueDate": "2024-01-15",
+    "completed": false,
+    "createdAt": "2024-01-10T08:00:00Z",
+    "completedAt": null
+  },
+  {
+    "Id": 2,
+    "title": "Schedule dentist appointment",
+    "description": "Annual checkup and cleaning - call Dr. Smith's office",
+    "priority": "medium",
+    "category": "health",
+    "dueDate": "2024-01-16",
+    "completed": false,
+    "createdAt": "2024-01-10T09:30:00Z",
+    "completedAt": null
+  },
+  {
+    "Id": 3,
+    "title": "Finish reading 'Atomic Habits'",
+    "description": "Complete chapters 15-20 and write notes in journal",
+    "priority": "low",
+    "category": "personal",
+    "dueDate": "2024-01-20",
+    "completed": false,
+    "createdAt": "2024-01-08T10:15:00Z",
+    "completedAt": null
+  },
+  {
+    "Id": 4,
+    "title": "Plan weekend hiking trip",
+    "description": "Research trails, check weather, pack gear, and coordinate with friends",
+    "priority": "medium",
+    "category": "personal",
+    "dueDate": "2024-01-18",
+    "completed": false,
+    "createdAt": "2024-01-09T14:20:00Z",
+    "completedAt": null
+  },
+  {
+    "Id": 5,
+    "title": "Update portfolio website",
+    "description": "Add latest projects and refresh design with new color scheme",
+    "priority": "high",
+    "category": "work",
+    "dueDate": "2024-01-17",
+    "completed": false,
+    "createdAt": "2024-01-07T16:45:00Z",
+    "completedAt": null
+  },
+  {
+    "Id": 6,
+    "title": "Grocery shopping",
+    "description": "Buy ingredients for meal prep: chicken, vegetables, rice, and snacks",
+    "priority": "medium",
+    "category": "home",
+    "dueDate": "2024-01-14",
+    "completed": true,
+    "createdAt": "2024-01-12T11:00:00Z",
+    "completedAt": "2024-01-14T15:30:00Z"
+  },
+  {
+    "Id": 7,
+    "title": "Call mom for birthday planning",
+    "description": "Discuss venue options and guest list for her surprise party",
+    "priority": "high",
+    "category": "personal",
+    "dueDate": "2024-01-13",
+    "completed": true,
+    "createdAt": "2024-01-11T13:10:00Z",
+    "completedAt": "2024-01-13T18:45:00Z"
+  },
+  {
+    "Id": 8,
+    "title": "Submit expense reports",
+    "description": "Gather receipts from last month's business trips and file expense claims",
+    "priority": "high",
+    "category": "work",
+    "dueDate": "2024-01-19",
+    "completed": false,
+    "createdAt": "2024-01-10T12:30:00Z",
+    "completedAt": null
+  },
+  {
+    "Id": 9,
+    "title": "Clean and organize home office",
+    "description": "Declutter desk, organize files, and set up new storage system",
+    "priority": "low",
+    "category": "home",
+    "dueDate": "2024-01-21",
+    "completed": false,
+    "createdAt": "2024-01-09T17:00:00Z",
+    "completedAt": null
+  },
+  {
+    "Id": 10,
+    "title": "Research vacation destinations",
+    "description": "Compare prices and activities for summer vacation options in Europe",
+    "priority": "low",
+    "category": "personal",
+    "dueDate": "2024-01-25",
+    "completed": false,
+    "createdAt": "2024-01-08T19:20:00Z",
+    "completedAt": null
+  }
+]
