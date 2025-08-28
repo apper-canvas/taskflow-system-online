@@ -20,13 +20,21 @@ class TasksService {
   }
 
   async create(taskData) {
-    await this.delay(400);
+await this.delay(400);
     const newTask = {
       Id: this.getNextId(),
       ...taskData,
       completed: false,
       createdAt: new Date().toISOString(),
-      completedAt: null
+      completedAt: null,
+      // Recurrence fields
+      isRecurring: taskData.isRecurring || false,
+      recurrencePattern: taskData.recurrencePattern || null,
+      recurrenceInterval: taskData.recurrenceInterval || null,
+      recurrenceEndType: taskData.recurrenceEndType || null,
+      recurrenceEndDate: taskData.recurrenceEndDate || null,
+      recurrenceEndAfter: taskData.recurrenceEndAfter || null,
+      parentRecurringTaskId: taskData.parentRecurringTaskId || null
     };
     this.tasks.push(newTask);
     return { ...newTask };
@@ -42,7 +50,17 @@ class TasksService {
     this.tasks[index] = {
       ...this.tasks[index],
       ...updates
-    };
+};
+    
+    // Handle recurrence field updates
+    if (updates.isRecurring !== undefined) {
+      this.tasks[index].isRecurring = updates.isRecurring;
+      this.tasks[index].recurrencePattern = updates.recurrencePattern || null;
+      this.tasks[index].recurrenceInterval = updates.recurrenceInterval || null;
+      this.tasks[index].recurrenceEndType = updates.recurrenceEndType || null;
+      this.tasks[index].recurrenceEndDate = updates.recurrenceEndDate || null;
+      this.tasks[index].recurrenceEndAfter = updates.recurrenceEndAfter || null;
+    }
     
     if (updates.completed !== undefined) {
       this.tasks[index].completedAt = updates.completed 

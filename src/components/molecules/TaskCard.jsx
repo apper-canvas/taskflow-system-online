@@ -98,7 +98,7 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }) => {
                   "flex items-center space-x-1 text-xs",
                   isOverdue && "text-error-600 font-medium",
                   isDueToday && "text-warning-600 font-medium",
-                  !isOverdue && !isDueToday && "text-gray-500"
+!isOverdue && !isDueToday && "text-gray-500"
                 )}>
                   <ApperIcon 
                     name="Calendar" 
@@ -109,6 +109,15 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }) => {
                     )}
                   />
                   <span>{formatDueDate(dueDate)}</span>
+                  {task.isRecurring && (
+                    <div className="flex items-center ml-2">
+                      <ApperIcon 
+                        name="RotateCcw" 
+                        size={10} 
+                        className="text-primary-500"
+                      />
+                    </div>
+                  )}
                   {isOverdue && (
                     <Badge variant="error" size="sm" className="ml-2">
                       Overdue
