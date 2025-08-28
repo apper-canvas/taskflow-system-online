@@ -277,12 +277,11 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
                   className="bg-gradient-to-r from-error-500 to-error-600 h-2 rounded-full transition-all duration-700 ease-out"
                   style={{ width: `${stats.highPriority > 0 ? Math.round(((stats.highPriorityCompleted || 0) / stats.highPriority) * 100) : 0}%` }}
                 />
-              </div>
+</div>
             </div>
           )}
         </div>
-        
-<div className="mt-4 pt-4 border-t border-gray-100">
+        <div className="mt-4 pt-4 border-t border-gray-100">
           <div className="flex items-center justify-between text-sm">
             <span className="text-gray-600">Productivity Score</span>
             <span className="font-semibold text-primary-600">{Math.min(Math.round(completionRate * 1.2), 100)}%</span>
