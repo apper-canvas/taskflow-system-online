@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { format, parseISO, isToday, isPast } from "date-fns";
-import ApperIcon from "@/components/ApperIcon";
-import Badge from "@/components/atoms/Badge";
-import PriorityDot from "@/components/atoms/PriorityDot";
-import Checkbox from "@/components/atoms/Checkbox";
-import Button from "@/components/atoms/Button";
+import { format, isPast, isToday, parseISO } from "date-fns";
 import { useCategories } from "@/hooks/useCategories";
 import { cn } from "@/utils/cn";
+import ApperIcon from "@/components/ApperIcon";
+import TaskStats from "@/components/molecules/TaskStats";
+import PriorityDot from "@/components/atoms/PriorityDot";
+import Button from "@/components/atoms/Button";
+import Badge from "@/components/atoms/Badge";
+import Checkbox from "@/components/atoms/Checkbox";
 
 const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }) => {
   const [isCompleting, setIsCompleting] = useState(false);
@@ -92,17 +93,16 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }) => {
                     <ApperIcon name={category.icon} size={12} />
                     <span>{category.name}</span>
                   </Badge>
-                )}
+)}
 
                 <div className={cn(
                   "flex items-center space-x-1 text-xs",
                   isOverdue && "text-error-600 font-medium",
                   isDueToday && "text-warning-600 font-medium",
-!isOverdue && !isDueToday && "text-gray-500"
+                  !isOverdue && !isDueToday && "text-gray-500"
                 )}>
                   <ApperIcon 
-                    name="Calendar" 
-                    size={12} 
+                    name="Calendar"
                     className={cn(
                       isOverdue && "text-error-500",
                       isDueToday && "text-warning-500"
