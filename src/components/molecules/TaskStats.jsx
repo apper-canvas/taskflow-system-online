@@ -140,12 +140,12 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
               <div className={cn(
                 "w-12 h-12 rounded-lg bg-gradient-to-br",
                 stat.bgGradient,
-                "flex items-center justify-center shadow-lg"
+"flex items-center justify-center shadow-lg"
               )}>
                 <ApperIcon 
                   name={stat.icon} 
                   size={20} 
-className="text-white"
+                  className="text-white"
                 />
               </div>
             </div>
