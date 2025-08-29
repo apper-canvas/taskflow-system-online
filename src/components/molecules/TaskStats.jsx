@@ -123,11 +123,11 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
                 </p>
                 {stat.change !== 0 && (
                   <div className="flex items-center mt-1">
-                    <ApperIcon 
+<ApperIcon 
                       name={stat.change > 0 ? "TrendingUp" : "TrendingDown"} 
                       size={14} 
                       className={stat.change > 0 ? "text-success-500" : "text-error-500"}
-/>
+                    />
                     <span className={cn(
                       "text-xs font-medium ml-1",
                       stat.change > 0 ? "text-success-500" : "text-error-500"
@@ -149,7 +149,7 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
                 />
               </div>
             </div>
-</div>
+          </div>
         ))}
       </div>
 
@@ -257,15 +257,13 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
               <span className="text-sm font-medium text-gray-700">Overall</span>
               <span className="text-sm text-gray-500">{stats.completed}/{stats.total}</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+<div className="w-full bg-gray-200 rounded-full h-2">
               <div 
                 className="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full transition-all duration-700 ease-out"
                 style={{ width: `${completionRate}%` }}
-/>
+              />
             </div>
           </div>
-        </div>
-          
           {/* High Priority Progress */}
           {stats.highPriority > 0 && (
             <div>
