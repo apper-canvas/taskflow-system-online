@@ -135,15 +135,15 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
                       {Math.abs(stat.change)}
                     </span>
                   </div>
-                )}
+)}
               </div>
               <div className={cn(
                 "w-12 h-12 rounded-lg bg-gradient-to-br",
                 stat.bgGradient,
-"flex items-center justify-center shadow-lg"
+                "flex items-center justify-center shadow-lg"
               )}>
                 <ApperIcon 
-                  name={stat.icon} 
+                  name={stat.icon}
                   size={20} 
                   className="text-white"
                 />
@@ -152,7 +152,6 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
           </div>
         ))}
       </div>
-
       {/* Charts Row */
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Completion Overview */}
