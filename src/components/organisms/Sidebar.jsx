@@ -13,11 +13,11 @@ const Sidebar = ({
   className 
 }) => {
   return (
-    <aside className={`bg-white border-r border-gray-200 ${className}`}>
+<aside className={`bg-white border-r border-gray-200 ${className}`}>
       <div className="p-6 space-y-8">
         {/* Quick Stats */}
-        <div>
-<TaskStats stats={stats} />
+        <div className="overflow-hidden">
+          <TaskStats stats={stats} />
         </div>
 
         {/* Filters Section */}

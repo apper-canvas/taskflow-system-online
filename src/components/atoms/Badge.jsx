@@ -28,10 +28,11 @@ const Badge = forwardRef(({
     lg: "px-4 py-2 text-base"
   };
 
-  const customStyle = color ? {
-    backgroundColor: `${color}20`,
+const customStyle = color ? {
+    backgroundColor: `${color}15`,
     color: color,
-    border: `1px solid ${color}40`
+    border: `1px solid ${color}30`,
+    fontWeight: '500'
   } : {};
 
   return (

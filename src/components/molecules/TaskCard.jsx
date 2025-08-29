@@ -76,50 +76,50 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }) => {
                 </p>
               )}
 
-              <div className="flex items-center space-x-3">
-                <div className="flex items-center space-x-2">
+<div className="flex items-center flex-wrap gap-3">
+                <div className="flex items-center gap-2">
                   <PriorityDot priority={task.priority} size="sm" />
                   <span className="text-xs font-medium text-gray-500 capitalize">
                     {task.priority}
                   </span>
                 </div>
 
-                {category && (
+{category && (
                   <Badge 
                     color={category.color}
                     size="sm"
-                    className="flex items-center space-x-1"
+                    className="flex items-center gap-1"
                   >
                     <ApperIcon name={category.icon} size={12} />
-                    <span>{category.name}</span>
+                    <span className="truncate">{category.name}</span>
                   </Badge>
-)}
+                )}
 
-                <div className={cn(
-                  "flex items-center space-x-1 text-xs",
+<div className={cn(
+                  "flex items-center gap-1 text-xs",
                   isOverdue && "text-error-600 font-medium",
                   isDueToday && "text-warning-600 font-medium",
                   !isOverdue && !isDueToday && "text-gray-500"
                 )}>
                   <ApperIcon 
                     name="Calendar"
+                    size={14}
                     className={cn(
+                      "flex-shrink-0",
                       isOverdue && "text-error-500",
                       isDueToday && "text-warning-500"
                     )}
                   />
-                  <span>{formatDueDate(dueDate)}</span>
+                  <span className="flex-shrink-0">{formatDueDate(dueDate)}</span>
                   {task.isRecurring && (
-                    <div className="flex items-center ml-2">
-                      <ApperIcon 
-                        name="RotateCcw" 
-                        size={10} 
-                        className="text-primary-500"
-                      />
-                    </div>
+                    <ApperIcon 
+                      name="RotateCcw" 
+                      size={10} 
+                      className="text-primary-500 flex-shrink-0 ml-1"
+                    />
                   )}
                   {isOverdue && (
-                    <Badge variant="error" size="sm" className="ml-2">
+                    <Badge variant="error" size="sm" className="ml-1">
                       Overdue
                     </Badge>
                   )}
@@ -127,12 +127,12 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }) => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-1 ml-4">
+<div className="flex items-center gap-1 ml-4 flex-shrink-0">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => onEdit(task)}
-                className="text-gray-400 hover:text-primary-600"
+                className="text-gray-400 hover:text-primary-600 w-8 h-8"
               >
                 <ApperIcon name="Edit2" size={14} />
               </Button>
@@ -141,7 +141,7 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }) => {
                 variant="ghost"
                 size="icon"
                 onClick={() => onDelete(task.Id)}
-                className="text-gray-400 hover:text-error-600"
+                className="text-gray-400 hover:text-error-600 w-8 h-8"
               >
                 <ApperIcon name="Trash2" size={14} />
               </Button>

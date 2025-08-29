@@ -32,8 +32,8 @@ const CategoryFilter = ({ selectedCategories = [], onCategoryToggle }) => {
             <button
               key={category.Id}
               onClick={() => onCategoryToggle(category.name)}
-              className={`flex items-center space-x-3 w-full p-2 rounded-lg transition-all duration-200 hover:bg-gray-50 ${
-                isSelected ? "bg-primary-50 border-2 border-primary-200" : ""
+className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all duration-200 hover:bg-gray-50 ${
+                isSelected ? "bg-primary-50 border-2 border-primary-200" : "border-2 border-transparent"
               }`}
             >
               <div
@@ -45,7 +45,7 @@ const CategoryFilter = ({ selectedCategories = [], onCategoryToggle }) => {
                 size={14} 
                 className="text-gray-500"
               />
-              <span className={`text-sm font-medium flex-1 text-left ${
+<span className={`text-sm font-medium flex-1 text-left min-w-0 truncate ${
                 isSelected ? "text-primary-700" : "text-gray-700"
               }`}>
                 {category.name}

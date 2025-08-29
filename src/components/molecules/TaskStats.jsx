@@ -105,31 +105,31 @@ const TaskStats = ({ stats, className }) => {
 const avgCompletionTime = stats.avgCompletionTime || 0;
 
   return (
-    <div className={cn("space-y-4", className)}>
-{/* Statistics Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div className={cn("space-y-6", className)}>
+      {/* Statistics Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {statCards.map((stat) => (
           <div
             key={stat.label}
-            className="bg-white rounded-card p-4 shadow-card hover:shadow-card-hover transition-all duration-200 transform hover:scale-[1.02]"
+className="bg-white rounded-card p-5 shadow-card hover:shadow-card-hover transition-all duration-200 transform hover:scale-[1.02]"
           >
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-600 mb-1">
+            <div className="flex items-start justify-between gap-4">
+<div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-600 mb-2 truncate">
                   {stat.label}
                 </p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-2xl font-bold text-gray-900 mb-1">
                   {stat.value}
                 </p>
                 {stat.change !== 0 && (
-                  <div className="flex items-center mt-1">
+                  <div className="flex items-center gap-1">
                     <ApperIcon 
                       name={stat.change > 0 ? "TrendingUp" : "TrendingDown"} 
                       size={14} 
                       className={stat.change > 0 ? "text-success-500" : "text-error-500"}
                     />
                     <span className={cn(
-                      "text-xs font-medium ml-1",
+                      "text-xs font-medium",
                       stat.change > 0 ? "text-success-500" : "text-error-500"
                     )}>
                       {Math.abs(stat.change)}%
@@ -137,8 +137,8 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
                   </div>
                 )}
               </div>
-              <div className={cn(
-                "w-12 h-12 rounded-lg bg-gradient-to-br",
+<div className={cn(
+                "w-12 h-12 rounded-lg bg-gradient-to-br flex-shrink-0",
                 stat.bgGradient,
                 "flex items-center justify-center shadow-lg"
               )}>
@@ -154,38 +154,39 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
       </div>
 
       {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Completion Overview */}
-        <div className="bg-white rounded-card p-6 shadow-card">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+<div className="bg-white rounded-card p-6 shadow-card">
+          <div className="flex items-start justify-between mb-6 gap-4">
+            <h3 className="text-lg font-semibold text-gray-900 flex-1 min-w-0">
               Completion Overview
             </h3>
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+            <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent flex-shrink-0">
               {completionRate}%
             </span>
           </div>
           
-          <div className="flex items-center justify-center mb-4">
-            <div className="relative">
+<div className="flex items-center justify-center mb-6">
+            <div className="relative w-32 h-32">
               <Chart
                 options={donutOptions}
                 series={donutSeries}
                 type="donut"
-                height={120}
+                height={128}
+                width={128}
               />
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">{completionRate}%</div>
+                  <div className="text-lg font-bold text-gray-900">{completionRate}%</div>
                   <div className="text-xs text-gray-500">Complete</div>
                 </div>
               </div>
             </div>
           </div>
           
-          <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+<div className="w-full bg-gray-200 rounded-full h-3 mb-3">
             <div 
-              className="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full transition-all duration-700 ease-out"
+              className="bg-gradient-to-r from-primary-500 to-secondary-500 h-3 rounded-full transition-all duration-700 ease-out"
               style={{ width: `${completionRate}%` }}
             />
           </div>
@@ -196,18 +197,18 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
         </div>
 
         {/* Productivity Trends */}
-        <div className="bg-white rounded-card p-6 shadow-card">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+<div className="bg-white rounded-card p-6 shadow-card">
+          <div className="flex items-start justify-between mb-6 gap-4">
+            <h3 className="text-lg font-semibold text-gray-900 flex-1 min-w-0">
               Weekly Progress
             </h3>
-            <div className="flex items-center text-sm text-gray-600">
-              <ApperIcon name="TrendingUp" size={16} className="mr-1" />
+            <div className="flex items-center text-sm text-gray-600 flex-shrink-0 gap-1">
+              <ApperIcon name="TrendingUp" size={16} />
               <span>7 Days</span>
             </div>
           </div>
           
-          <div className="mb-4">
+<div className="mb-6">
             <Chart
               options={areaChartOptions}
               series={[{
@@ -219,13 +220,13 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
             />
           </div>
           
-          <div className="grid grid-cols-2 gap-4 text-center">
-            <div>
-              <div className="text-2xl font-bold text-gray-900">{taskVelocity}</div>
+<div className="grid grid-cols-2 gap-6 text-center">
+            <div className="min-w-0">
+              <div className="text-2xl font-bold text-gray-900 truncate">{taskVelocity}</div>
               <div className="text-xs text-gray-500">Tasks/Day</div>
             </div>
-            <div>
-              <div className="text-2xl font-bold text-gray-900">{avgCompletionTime}h</div>
+            <div className="min-w-0">
+              <div className="text-2xl font-bold text-gray-900 truncate">{avgCompletionTime}h</div>
               <div className="text-xs text-gray-500">Avg Time</div>
             </div>
           </div>
@@ -233,47 +234,47 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
       </div>
 
       {/* Detailed Progress Bar */}
-      <div className="bg-white rounded-card p-6 shadow-card">
-        <div className="flex items-center justify-between mb-4">
+<div className="bg-white rounded-card p-6 shadow-card">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
           <h3 className="text-lg font-semibold text-gray-900">
             Today's Detailed Progress
           </h3>
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center">
-              <div className="w-3 h-3 bg-primary-500 rounded-full mr-2"></div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-primary-500 rounded-full flex-shrink-0"></div>
               <span className="text-sm text-gray-600">Completed</span>
             </div>
-            <div className="flex items-center">
-              <div className="w-3 h-3 bg-gray-300 rounded-full mr-2"></div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-gray-300 rounded-full flex-shrink-0"></div>
               <span className="text-sm text-gray-600">Remaining</span>
             </div>
           </div>
         </div>
         
-        <div className="space-y-3">
+<div className="space-y-4">
           {/* Overall Progress */}
           <div>
-            <div className="flex justify-between mb-1">
+            <div className="flex justify-between items-center mb-2">
               <span className="text-sm font-medium text-gray-700">Overall</span>
-              <span className="text-sm text-gray-500">{stats.completed}/{stats.total}</span>
+              <span className="text-sm text-gray-500 font-medium">{stats.completed}/{stats.total}</span>
             </div>
-<div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="w-full bg-gray-200 rounded-full h-3">
               <div 
-                className="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full transition-all duration-700 ease-out"
+                className="bg-gradient-to-r from-primary-500 to-secondary-500 h-3 rounded-full transition-all duration-700 ease-out"
                 style={{ width: `${completionRate}%` }}
               />
             </div>
           </div>
           {/* High Priority Progress */}
-          {stats.highPriority > 0 && (
+{stats.highPriority > 0 && (
             <div>
-              <div className="flex justify-between mb-1">
+              <div className="flex justify-between items-center mb-2">
                 <span className="text-sm font-medium text-gray-700">High Priority</span>
-                <span className="text-sm text-gray-500">{stats.highPriorityCompleted || 0}/{stats.highPriority}</span>
+                <span className="text-sm text-gray-500 font-medium">{stats.highPriorityCompleted || 0}/{stats.highPriority}</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-gray-200 rounded-full h-3">
                 <div 
-                  className="bg-gradient-to-r from-error-500 to-error-600 h-2 rounded-full transition-all duration-700 ease-out"
+                  className="bg-gradient-to-r from-error-500 to-error-600 h-3 rounded-full transition-all duration-700 ease-out"
                   style={{ 
                     width: `${stats.highPriority > 0 ? Math.round(((stats.highPriorityCompleted || 0) / stats.highPriority) * 100) : 0}%` 
                   }}
@@ -282,7 +283,7 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
             </div>
           )}
         </div>
-        <div className="mt-4 pt-4 border-t border-gray-100">
+<div className="mt-6 pt-4 border-t border-gray-100">
           <div className="flex items-center justify-between text-sm">
             <span className="text-gray-600">Productivity Score</span>
             <span className="font-semibold text-primary-600">{Math.min(Math.round(completionRate * 1.2), 100)}%</span>
