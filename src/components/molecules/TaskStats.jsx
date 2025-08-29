@@ -129,10 +129,8 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
                       className={stat.change > 0 ? "text-success-500" : "text-error-500"}
                     />
                     <span className={cn(
-                      "text-xs font-medium ml-1",
-                      stat.change > 0 ? "text-success-600" : "text-error-600"
-                    )}>
-{Math.abs(stat.change)}
+)}>
+                      {Math.abs(stat.change)}%
                     </span>
                   </div>
                 )}
@@ -260,12 +258,12 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
               <div 
                 className="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full transition-all duration-700 ease-out"
                 style={{ width: `${completionRate}%` }}
-              />
+/>
             </div>
           </div>
+        </div>
           
           {/* High Priority Progress */}
-{/* High Priority Progress */}
           {stats.highPriority > 0 && (
             <div>
               <div className="flex justify-between mb-1">
@@ -288,7 +286,7 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
             <span className="text-gray-600">Productivity Score</span>
             <span className="font-semibold text-primary-600">{Math.min(Math.round(completionRate * 1.2), 100)}%</span>
           </div>
-</div>
+        </div>
       </div>
     </div>
   );
