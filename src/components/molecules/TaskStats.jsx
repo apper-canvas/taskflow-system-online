@@ -145,11 +145,11 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
                 <ApperIcon 
                   name={stat.icon} 
                   size={20} 
-                  className="text-white"
+className="text-white"
                 />
               </div>
             </div>
-</div>
+          </div>
         ))}
       </div>
 
