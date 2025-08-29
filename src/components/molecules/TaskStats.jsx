@@ -127,9 +127,11 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
                       name={stat.change > 0 ? "TrendingUp" : "TrendingDown"} 
                       size={14} 
                       className={stat.change > 0 ? "text-success-500" : "text-error-500"}
-                    />
+/>
                     <span className={cn(
-)}>
+                      "text-xs font-medium ml-1",
+                      stat.change > 0 ? "text-success-500" : "text-error-500"
+                    )}>
                       {Math.abs(stat.change)}%
                     </span>
                   </div>
@@ -147,10 +149,11 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
                 />
               </div>
             </div>
-          </div>
+</div>
         ))}
       </div>
-      {/* Charts Row */
+
+      {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Completion Overview */}
         <div className="bg-white rounded-card p-6 shadow-card">
