@@ -132,10 +132,10 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
                       "text-xs font-medium ml-1",
                       stat.change > 0 ? "text-success-600" : "text-error-600"
                     )}>
-                      {Math.abs(stat.change)}
+{Math.abs(stat.change)}
                     </span>
                   </div>
-)}
+                )}
               </div>
               <div className={cn(
                 "w-12 h-12 rounded-lg bg-gradient-to-br",
@@ -265,11 +265,12 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
           </div>
           
           {/* High Priority Progress */}
+{/* High Priority Progress */}
           {stats.highPriority > 0 && (
             <div>
               <div className="flex justify-between mb-1">
                 <span className="text-sm font-medium text-gray-700">High Priority</span>
-<span className="text-sm text-gray-500">{stats.highPriorityCompleted || 0}/{stats.highPriority}</span>
+                <span className="text-sm text-gray-500">{stats.highPriorityCompleted || 0}/{stats.highPriority}</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
@@ -287,8 +288,8 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
             <span className="text-gray-600">Productivity Score</span>
             <span className="font-semibold text-primary-600">{Math.min(Math.round(completionRate * 1.2), 100)}%</span>
           </div>
-        </div>
 </div>
+      </div>
     </div>
   );
 };
