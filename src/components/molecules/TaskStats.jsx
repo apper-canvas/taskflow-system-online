@@ -106,7 +106,7 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
 
   return (
     <div className={cn("space-y-4", className)}>
-      {/* Statistics Cards */
+{/* Statistics Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {statCards.map((stat) => (
           <div
@@ -123,7 +123,7 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
                 </p>
                 {stat.change !== 0 && (
                   <div className="flex items-center mt-1">
-<ApperIcon 
+                    <ApperIcon 
                       name={stat.change > 0 ? "TrendingUp" : "TrendingDown"} 
                       size={14} 
                       className={stat.change > 0 ? "text-success-500" : "text-error-500"}
