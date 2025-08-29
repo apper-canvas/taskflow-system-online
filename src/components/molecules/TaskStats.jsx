@@ -149,11 +149,11 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
                 />
               </div>
             </div>
-          </div>
+</div>
         ))}
       </div>
 
-      {/* Charts Row */}
+      {/* Charts Row */
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Completion Overview */}
         <div className="bg-white rounded-card p-6 shadow-card">
@@ -289,7 +289,7 @@ const avgCompletionTime = stats.avgCompletionTime || 0;
             <span className="font-semibold text-primary-600">{Math.min(Math.round(completionRate * 1.2), 100)}%</span>
           </div>
         </div>
-      </div>
+</div>
     </div>
   );
 };
