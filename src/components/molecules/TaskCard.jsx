@@ -84,7 +84,21 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }) => {
                   </span>
                 </div>
 
-{category && (
+                {task.status && (
+                  <Badge 
+                    color={
+                      task.status === "Completed" ? "success" :
+                      task.status === "In Progress" ? "warning" :
+                      task.status === "Deferred" ? "secondary" : "info"
+                    }
+                    size="sm"
+                    className="flex items-center gap-1"
+                  >
+                    <span className="truncate">{task.status}</span>
+                  </Badge>
+                )}
+
+                {category && (
                   <Badge 
                     color={category.color}
                     size="sm"
@@ -95,7 +109,7 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }) => {
                   </Badge>
                 )}
 
-<div className={cn(
+                <div className={cn(
                   "flex items-center gap-1 text-xs",
                   isOverdue && "text-error-600 font-medium",
                   isDueToday && "text-warning-600 font-medium",

@@ -13,6 +13,7 @@ const [formData, setFormData] = useState({
     title: "",
     description: "",
     priority: "medium",
+    status: "Not Started",
     category: "work",
     dueDate: format(new Date(), "yyyy-MM-dd"),
     isRecurring: false,
@@ -30,6 +31,7 @@ setFormData({
         title: task.title || "",
         description: task.description || "",
         priority: task.priority || "medium",
+        status: task.status || "Not Started",
         category: task.category || "work",
         dueDate: task.dueDate || format(new Date(), "yyyy-MM-dd"),
         isRecurring: task.isRecurring || false,
@@ -103,7 +105,7 @@ setFormData({
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div>
           <Select
             label="Priority"
@@ -113,6 +115,19 @@ setFormData({
             <option value="low">Low Priority</option>
             <option value="medium">Medium Priority</option>
             <option value="high">High Priority</option>
+          </Select>
+        </div>
+
+        <div>
+          <Select
+            label="Status"
+            value={formData.status}
+            onChange={(e) => handleChange("status", e.target.value)}
+          >
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Deferred">Deferred</option>
           </Select>
         </div>
 
@@ -140,7 +155,7 @@ setFormData({
             required
           />
         </div>
-</div>
+      </div>
 
       {/* Recurrence Section */}
       <div className="bg-gray-50 p-4 rounded-input space-y-4">
