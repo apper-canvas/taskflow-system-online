@@ -131,12 +131,13 @@ setFormData({
           </Select>
         </div>
 
-        <div>
+<div>
           <Select
             label="Category"
             value={formData.category}
             onChange={(e) => handleChange("category", e.target.value)}
           >
+            <option value="">Select a category</option>
             {categories.map((category) => (
               <option key={category.Id} value={category.name}>
                 {category.name}
