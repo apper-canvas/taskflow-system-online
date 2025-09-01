@@ -436,5 +436,3 @@ class TasksService {
 // Export singleton instance
 const tasksService = new TasksService();
 export default tasksService;
-
-export default new TasksService();

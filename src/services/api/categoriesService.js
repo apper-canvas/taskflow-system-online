@@ -228,5 +228,3 @@ class CategoriesService {
 // Export singleton instance
 const categoriesService = new CategoriesService();
 export default categoriesService;
-
-export default new CategoriesService();
