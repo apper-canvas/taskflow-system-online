@@ -1,9 +1,9 @@
 import React from "react";
+import { useCategories } from "@/hooks/useCategories";
 import ApperIcon from "@/components/ApperIcon";
 import Badge from "@/components/atoms/Badge";
-import { useCategories } from "@/hooks/useCategories";
 
-const CategoryFilter = ({ selectedCategories = [], onCategoryToggle }) => {
+const CategoryFilter = ({ selectedCategories = [], onCategoryToggle, onAddCategory }) => {
   const { categories, loading } = useCategories();
 
   if (loading) {
@@ -21,9 +21,19 @@ const CategoryFilter = ({ selectedCategories = [], onCategoryToggle }) => {
 
   return (
 <div className="space-y-2">
-      <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
-        Categories
-      </h3>
+      <div className="flex items-center justify-between">
+        <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+          Categories
+        </h3>
+<button
+          onClick={onAddCategory}
+          disabled={!onAddCategory}
+          className="p-1 rounded hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          title="Add Category"
+        >
+          <ApperIcon name="Plus" size={14} className="text-gray-500 hover:text-primary-600" />
+        </button>
+      </div>
       <div className="space-y-2">
         {categories.map((category) => {
           const isSelected = selectedCategories.includes(category.name);
@@ -59,7 +69,7 @@ onClick={() => onCategoryToggle(category.name)}
               )}
             </button>
           );
-        })}
+})}
       </div>
     </div>
   );

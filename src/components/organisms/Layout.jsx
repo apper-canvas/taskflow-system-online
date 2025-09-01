@@ -3,15 +3,19 @@ import { Outlet } from "react-router-dom";
 import Header from "@/components/organisms/Header";
 import Sidebar from "@/components/organisms/Sidebar";
 import TaskModal from "@/components/organisms/TaskModal";
+import CategoryModal from "@/components/organisms/CategoryModal";
 import { useTasks } from "@/hooks/useTasks";
-
+import { useCategories } from "@/hooks/useCategories";
 const Layout = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedPriorities, setSelectedPriorities] = useState([]);
-  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
-
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [editingCategory, setEditingCategory] = useState(null);
+  
+  const { createCategory, updateCategory } = useCategories();
 const { tasks: allTasks, createTask, updateTask, calculateStats } = useTasks("all");
 
   // Filter tasks for today
@@ -74,17 +78,45 @@ const { tasks: allTasks, createTask, updateTask, calculateStats } = useTasks("al
       await createTask(taskData);
     }
   };
-
-  const handleCloseModal = () => {
+const handleCloseModal = () => {
     setIsTaskModalOpen(false);
     setEditingTask(null);
   };
 
+  const handleAddCategory = useCallback(() => {
+    setEditingCategory(null);
+    setIsCategoryModalOpen(true);
+  }, []);
+
+  const handleEditCategory = useCallback((category) => {
+    setEditingCategory(category);
+    setIsCategoryModalOpen(true);
+  }, []);
+
+  const handleSubmitCategory = useCallback(async (categoryData) => {
+    try {
+      if (editingCategory) {
+        await updateCategory(editingCategory.Id, categoryData);
+      } else {
+        await createCategory(categoryData);
+      }
+    } catch (error) {
+      console.error("Error saving category:", error);
+      throw error;
+    }
+  }, [editingCategory, createCategory, updateCategory]);
+
+  const handleCloseCategoryModal = () => {
+    setIsCategoryModalOpen(false);
+    setEditingCategory(null);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+<div className="min-h-screen bg-gray-50 flex">
       {/* Desktop Sidebar */}
       <Sidebar
-stats={stats}
+        stats={stats}
+        onAddCategory={handleAddCategory}
         selectedCategories={selectedCategories}
         selectedPriorities={selectedPriorities}
         onCategoryToggle={handleCategoryToggle}
@@ -106,17 +138,25 @@ stats={stats}
             selectedCategories,
             selectedPriorities,
             onEditTask: handleEditTask,
+            onEditCategory: handleEditCategory,
             stats
           }} />
         </main>
       </div>
-
-      {/* Task Modal */}
+{/* Task Modal */}
       <TaskModal
         isOpen={isTaskModalOpen}
         task={editingTask}
         onClose={handleCloseModal}
         onSubmit={handleSubmitTask}
+      />
+
+      {/* Category Modal */}
+      <CategoryModal
+        isOpen={isCategoryModalOpen}
+        category={editingCategory}
+        onClose={handleCloseCategoryModal}
+        onSubmit={handleSubmitCategory}
       />
     </div>
   );
