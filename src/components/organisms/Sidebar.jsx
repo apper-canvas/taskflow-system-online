@@ -16,8 +16,8 @@ const Sidebar = ({
 <aside className={`bg-white border-r border-gray-200 ${className}`}>
 <div className="p-6 space-y-6">
         {/* Today's Detailed Progress */}
-        <div className="overflow-hidden">
-          <TaskStats stats={stats} />
+<div className="overflow-hidden">
+          <TaskStats stats={stats} showOnlyTodayProgress={true} />
         </div>
 
         {/* Filters Section */}
