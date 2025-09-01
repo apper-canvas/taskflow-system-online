@@ -10,6 +10,7 @@ const Sidebar = ({
   selectedPriorities,
   onCategoryToggle,
   onPriorityToggle,
+  onAddCategory,
   className 
 }) => {
   return (
@@ -27,9 +28,10 @@ const Sidebar = ({
             <span>Filters</span>
           </div>
 
-          <CategoryFilter
+<CategoryFilter
             selectedCategories={selectedCategories}
             onCategoryToggle={onCategoryToggle}
+            onAddCategory={onAddCategory}
           />
 
           <div className="border-t border-gray-100 pt-6">

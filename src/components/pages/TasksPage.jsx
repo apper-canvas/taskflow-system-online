@@ -1,8 +1,10 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useTasks } from "@/hooks/useTasks";
+import { useCategories } from "@/hooks/useCategories";
 import TaskList from "@/components/organisms/TaskList";
 import TaskStats from "@/components/molecules/TaskStats";
+import CategoryModal from "@/components/organisms/CategoryModal";
 
 const TasksPage = ({ view = "all" }) => {
   const { 
@@ -12,6 +14,11 @@ const TasksPage = ({ view = "all" }) => {
     onEditTask 
   } = useOutletContext();
 
+  // Category modal state
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  
+  // Category management
+  const { createCategory } = useCategories();
   const { 
     tasks, 
     loading, 
@@ -129,8 +136,20 @@ return filtered;
       default:
 return "All your active tasks";
     }
+};
+
+  // Category management handlers
+  const handleAddCategory = () => {
+    setIsCategoryModalOpen(true);
   };
 
+  const handleCategoryModalClose = () => {
+    setIsCategoryModalOpen(false);
+  };
+
+  const handleCategoryCreate = async (categoryData) => {
+    await createCategory(categoryData);
+  };
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Task Progress Dashboard */}
@@ -160,7 +179,7 @@ return "All your active tasks";
 </div>
       </div>
 
-      <TaskList
+<TaskList
         tasks={filteredTasks}
         loading={loading}
         error={error}
@@ -168,6 +187,14 @@ return "All your active tasks";
         onEditTask={onEditTask}
         onDeleteTask={deleteTask}
         onRetry={refetch}
+      />
+
+      {/* Category Modal */}
+      <CategoryModal
+        isOpen={isCategoryModalOpen}
+        category={null}
+        onClose={handleCategoryModalClose}
+        onSubmit={handleCategoryCreate}
       />
     </div>
   );
