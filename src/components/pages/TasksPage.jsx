@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import { useOutletContext } from "react-router-dom";
+import { useTasks } from "@/hooks/useTasks";
 import TaskList from "@/components/organisms/TaskList";
 import TaskStats from "@/components/molecules/TaskStats";
-import { useTasks } from "@/hooks/useTasks";
 
 const TasksPage = ({ view = "all" }) => {
   const { 
@@ -65,8 +65,45 @@ const TasksPage = ({ view = "all" }) => {
       return new Date(a.dueDate) - new Date(b.dueDate);
     });
 
-    return filtered;
+return filtered;
   }, [tasks, searchQuery, selectedCategories, selectedPriorities]);
+
+  // Calculate task statistics
+  const stats = useMemo(() => {
+    const totalTasks = tasks.length;
+    const completedTasks = tasks.filter(task => task.completed).length;
+    const pendingTasks = totalTasks - completedTasks;
+    const overdueTasks = tasks.filter(task => {
+      const dueDate = new Date(task.dueDate);
+      const today = new Date();
+      today.setHours(23, 59, 59, 999);
+      return !task.completed && dueDate < today;
+    }).length;
+
+    const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+    // Category breakdown
+    const categoryStats = tasks.reduce((acc, task) => {
+      acc[task.category] = (acc[task.category] || 0) + 1;
+      return acc;
+    }, {});
+
+    // Priority breakdown
+    const priorityStats = tasks.reduce((acc, task) => {
+      acc[task.priority] = (acc[task.priority] || 0) + 1;
+      return acc;
+    }, {});
+
+    return {
+      totalTasks,
+      completedTasks,
+      pendingTasks,
+      overdueTasks,
+      completionRate,
+      categoryStats,
+      priorityStats
+    };
+  }, [tasks]);
 
   const getPageTitle = () => {
     switch (view) {
@@ -107,7 +144,7 @@ return "All your active tasks";
               Overview of your task completion and productivity metrics
             </p>
           </div>
-          <TaskStats stats={useOutletContext().stats} />
+<TaskStats stats={stats} />
         </div>
       )}
 
