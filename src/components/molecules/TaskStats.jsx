@@ -244,7 +244,7 @@ const TaskStats = ({ stats, className }) => {
               Today's Detailed Progress
             </h3>
             
-<div className="flex items-center justify-center gap-4 mb-4">
+            <div className="flex items-center justify-center gap-4 mb-4">
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-primary-500 rounded-full"></div>
                 <span className="text-sm font-medium text-gray-600">Completed</span>
@@ -255,51 +255,87 @@ const TaskStats = ({ stats, className }) => {
               </div>
             </div>
             
-<div className="space-y-3">
+            <div className="space-y-4">
               {/* Overall Progress */}
-<div>
+              <div>
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-sm font-semibold text-gray-700">Overall Tasks</span>
+                  <span className="text-sm font-semibold text-gray-700">Today's Tasks</span>
                   <span className="text-sm font-bold text-gray-900">
                     {stats.completed || 0}/{stats.total || 0}
                   </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-3">
+                <div className="w-full bg-gray-200 rounded-full h-4">
                   <div 
-                    className="bg-gradient-to-r from-primary-500 to-secondary-500 h-3 rounded-full transition-all duration-1000 ease-out"
+                    className="bg-gradient-to-r from-primary-500 to-secondary-500 h-4 rounded-full transition-all duration-1000 ease-out"
                     style={{ width: `${completionRate}%` }}
                   />
+                </div>
+                <div className="text-xs text-gray-500 mt-1 text-center">
+                  {completionRate}% Complete
                 </div>
               </div>
 
               {/* High Priority Progress */}
-              {stats.highPriority > 0 && (
+              {(stats.highPriority > 0 || stats.highPriorityCompleted > 0) && (
                 <div>
-<div className="flex justify-between items-center mb-2">
+                  <div className="flex justify-between items-center mb-2">
                     <span className="text-sm font-semibold text-gray-700">High Priority</span>
                     <span className="text-sm font-bold text-error-600">
-                      {stats.highPriorityCompleted || 0}/{stats.highPriority}
+                      {stats.highPriorityCompleted || 0}/{(stats.highPriority || 0) + (stats.highPriorityCompleted || 0)}
                     </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-3">
                     <div 
                       className="bg-gradient-to-r from-error-500 to-error-600 h-3 rounded-full transition-all duration-1000 ease-out"
                       style={{ 
-                        width: `${stats.highPriority > 0 ? Math.round(((stats.highPriorityCompleted || 0) / stats.highPriority) * 100) : 0}%` 
+                        width: `${((stats.highPriority || 0) + (stats.highPriorityCompleted || 0)) > 0 ? Math.round(((stats.highPriorityCompleted || 0) / ((stats.highPriority || 0) + (stats.highPriorityCompleted || 0))) * 100) : 0}%` 
                       }}
                     />
                   </div>
                 </div>
               )}
 
-<div className="pt-3 border-t border-gray-200">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-600">Productivity Score</span>
+              {/* Daily Productivity Score */}
+              <div className="pt-3 border-t border-gray-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-gray-600">Daily Productivity</span>
                   <span className="text-lg font-bold text-primary-600">
                     {Math.min(Math.round(completionRate * 1.2), 100)}%
                   </span>
                 </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-gradient-to-r from-success-500 to-primary-500 h-2 rounded-full transition-all duration-1000 ease-out"
+                    style={{ width: `${Math.min(Math.round(completionRate * 1.2), 100)}%` }}
+                  />
+                </div>
               </div>
+
+              {/* Task Status Summary */}
+              {stats.total > 0 && (
+                <div className="pt-2 text-xs text-gray-500 space-y-1">
+                  <div className="flex justify-between">
+                    <span>Completed:</span>
+                    <span className="font-medium text-primary-600">{stats.completed || 0} tasks</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Remaining:</span>
+                    <span className="font-medium text-gray-700">{stats.pending || 0} tasks</span>
+                  </div>
+                  {stats.pending === 0 && stats.total > 0 && (
+                    <div className="text-center pt-2 text-success-600 font-medium">
+                      🎉 All today's tasks completed!
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {stats.total === 0 && (
+                <div className="text-center py-4 text-gray-500">
+                  <ApperIcon name="Calendar" size={24} className="mx-auto mb-2 text-gray-400" />
+                  <p className="text-sm">No tasks scheduled for today</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

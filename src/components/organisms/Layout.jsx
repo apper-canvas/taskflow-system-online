@@ -14,13 +14,24 @@ const Layout = () => {
 
 const { tasks: allTasks, createTask, updateTask, calculateStats } = useTasks("all");
 
-  // Calculate comprehensive stats with productivity metrics
-  const stats = calculateStats ? calculateStats(allTasks) : {
-    total: allTasks.length,
-    completed: allTasks.filter(task => task.completed).length,
-    pending: allTasks.filter(task => !task.completed).length,
-    highPriority: allTasks.filter(task => task.priority === "high" && !task.completed).length,
-    highPriorityCompleted: allTasks.filter(task => task.priority === "high" && task.completed).length,
+  // Filter tasks for today
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  
+  const todayTasks = allTasks.filter(task => {
+    const taskDate = new Date(task.dueDate);
+    return taskDate >= today && taskDate < tomorrow;
+  });
+
+  // Calculate today-specific stats with productivity metrics
+  const stats = {
+    total: todayTasks.length,
+    completed: todayTasks.filter(task => task.completed).length,
+    pending: todayTasks.filter(task => !task.completed).length,
+    highPriority: todayTasks.filter(task => task.priority === "high" && !task.completed).length,
+    highPriorityCompleted: todayTasks.filter(task => task.priority === "high" && task.completed).length,
     weeklyCompletion: [0, 0, 0, 0, 0, 0, 0],
     velocity: 0,
     avgCompletionTime: 0
