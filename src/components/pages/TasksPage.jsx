@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { useOutletContext } from "react-router-dom";
 import TaskList from "@/components/organisms/TaskList";
+import TaskStats from "@/components/molecules/TaskStats";
 import { useTasks } from "@/hooks/useTasks";
 
 const TasksPage = ({ view = "all" }) => {
@@ -89,13 +90,29 @@ const TasksPage = ({ view = "all" }) => {
       case "completed":
         return "Tasks you've completed";
       default:
-        return "All your active tasks";
+return "All your active tasks";
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="mb-6">
+    <div className="max-w-6xl mx-auto space-y-8">
+      {/* Task Progress Dashboard */}
+      {view === "all" && (
+        <div className="mb-8">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold font-display text-gray-900 mb-2">
+              Task Progress Dashboard
+            </h2>
+            <p className="text-gray-600">
+              Overview of your task completion and productivity metrics
+            </p>
+          </div>
+          <TaskStats stats={useOutletContext().stats} />
+        </div>
+      )}
+
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-6">
         <h2 className="text-2xl font-bold font-display text-gray-900 mb-2">
           {getPageTitle()}
         </h2>
@@ -103,6 +120,7 @@ const TasksPage = ({ view = "all" }) => {
           {getPageDescription()}
           {filteredTasks.length > 0 && ` (${filteredTasks.length} task${filteredTasks.length === 1 ? '' : 's'})`}
         </p>
+</div>
       </div>
 
       <TaskList

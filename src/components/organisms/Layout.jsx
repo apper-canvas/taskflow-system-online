@@ -20,6 +20,7 @@ const { tasks: allTasks, createTask, updateTask, calculateStats } = useTasks("al
     completed: allTasks.filter(task => task.completed).length,
     pending: allTasks.filter(task => !task.completed).length,
     highPriority: allTasks.filter(task => task.priority === "high" && !task.completed).length,
+    highPriorityCompleted: allTasks.filter(task => task.priority === "high" && task.completed).length,
     weeklyCompletion: [0, 0, 0, 0, 0, 0, 0],
     velocity: 0,
     avgCompletionTime: 0
@@ -89,8 +90,8 @@ stats={stats}
 
         {/* Page Content */}
         <main className="flex-1 p-6">
-          <Outlet context={{
-searchQuery,
+<Outlet context={{
+            searchQuery,
             selectedCategories,
             selectedPriorities,
             onEditTask: handleEditTask,

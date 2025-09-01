@@ -132,8 +132,7 @@ const updateTask = async (id, updates) => {
       ).length;
       weeklyCompletion.push(completedOnDay);
     }
-    
-    // Task velocity (average tasks completed per day over last 7 days)
+// Task velocity (average tasks completed per day over last 7 days)
     const recentCompletions = allTasks.filter(task => 
       task.completed && task.completedAt && 
       new Date(task.completedAt) >= weekAgo

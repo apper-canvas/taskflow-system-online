@@ -4,50 +4,84 @@ import { cn } from "@/utils/cn";
 import ApperIcon from "@/components/ApperIcon";
 
 const TaskStats = ({ stats, className }) => {
+  // Calculate completion rate
+  const completionRate = stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0;
+  
+  // Task velocity and completion time
+  const taskVelocity = stats.velocity || 0;
+  const avgCompletionTime = stats.avgCompletionTime || 0;
+
+  // Weekly progress chart data
+  const weeklyData = stats.weeklyCompletion || [0, 0, 0, 0, 0, 0, 0];
+
+  // Statistics cards data
   const statCards = [
     {
       label: "Total Tasks",
       value: stats.total || 0,
-      icon: "ListTodo",
-      bgGradient: "from-blue-500 to-blue-600",
-      change: stats.totalChange || 0
+      change: stats.totalChange || 0,
+      icon: "CheckSquare",
+      bgGradient: "from-blue-500 to-blue-600"
     },
     {
       label: "Completed",
       value: stats.completed || 0,
-      icon: "CheckCircle2",
-      bgGradient: "from-success-500 to-success-600",
-      change: stats.completedChange || 0
+      change: stats.completedChange || 0,
+      icon: "CheckCircle",
+      bgGradient: "from-green-500 to-green-600"
     },
     {
       label: "In Progress",
-      value: stats.pending || 0,
+      value: stats.inProgress || 0,
+      change: stats.inProgressChange || 0,
       icon: "Clock",
-      bgGradient: "from-warning-500 to-warning-600",
-      change: stats.pendingChange || 0
+      bgGradient: "from-yellow-500 to-yellow-600"
     },
     {
-      label: "High Priority",
-      value: stats.highPriority || 0,
-      icon: "AlertTriangle",
-      bgGradient: "from-error-500 to-error-600",
-      change: stats.highPriorityChange || 0
+      label: "Pending",
+      value: stats.pending || 0,
+      change: stats.pendingChange || 0,
+      icon: "AlertCircle",
+      bgGradient: "from-red-500 to-red-600"
     }
   ];
 
-  // Productivity chart data
-  const productivityData = stats.weeklyCompletion || [0, 0, 0, 0, 0, 0, 0];
-  const areaChartOptions = {
+  // Circular progress chart options
+  const circularOptions = {
+    chart: {
+      type: 'donut',
+      height: 200,
+      sparkline: { enabled: true }
+    },
+    colors: ['#5B4FE9', '#E5E7EB'],
+    plotOptions: {
+      pie: {
+        donut: {
+          size: '75%',
+          labels: {
+            show: false
+          }
+        }
+      }
+    },
+    dataLabels: { enabled: false },
+    legend: { show: false },
+    stroke: { width: 0 },
+    tooltip: { enabled: false }
+  };
+
+  const circularSeries = [stats.completed || 0, Math.max((stats.total || 0) - (stats.completed || 0), 0)];
+
+  // Weekly area chart options
+  const areaOptions = {
     chart: {
       type: 'area',
-      height: 200,
-      sparkline: {
-        enabled: true
-      },
+      height: 120,
+      sparkline: { enabled: true },
       animations: {
         enabled: true,
         easing: 'easeinout',
-        speed: 800
+        speed: 600
       }
     },
     stroke: {
@@ -58,63 +92,30 @@ const TaskStats = ({ stats, className }) => {
       type: 'gradient',
       gradient: {
         shadeIntensity: 1,
-        opacityFrom: 0.7,
-        opacityTo: 0.2,
-        stops: [0, 90, 100]
+        opacityFrom: 0.6,
+        opacityTo: 0.1
       }
     },
     colors: ['#5B4FE9'],
-    tooltip: {
-      enabled: true,
-      x: {
-        show: false
-      }
-    }
+    tooltip: { enabled: false }
   };
 
-  // Completion donut chart
-  const completionRate = stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0;
-  const donutOptions = {
-    chart: {
-      type: 'donut',
-      height: 120
-    },
-    colors: ['#5B4FE9', '#e5e7eb'],
-    plotOptions: {
-      pie: {
-        donut: {
-          size: '70%'
-        }
-      }
-    },
-    dataLabels: {
-      enabled: false
-    },
-    legend: {
-      show: false
-    },
-    tooltip: {
-      enabled: false
-    }
-  };
-
-  const donutSeries = [stats.completed || 0, (stats.total - stats.completed) || 0];
-
-  // Task velocity (tasks completed per day)
-  const taskVelocity = stats.velocity || 0;
-const avgCompletionTime = stats.avgCompletionTime || 0;
+  const areaSeries = [{
+    name: 'Tasks Completed',
+    data: weeklyData
+  }];
 
   return (
-<div className={cn("space-y-6", className)}>
+    <div className={cn("space-y-8", className)}>
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {statCards.map((stat) => (
           <div
             key={stat.label}
-className="bg-white rounded-card p-5 shadow-card hover:shadow-card-hover transition-all duration-200 transform hover:scale-[1.02]"
+            className="bg-white rounded-card p-5 shadow-card hover:shadow-card-hover transition-all duration-200 transform hover:scale-[1.02]"
           >
             <div className="flex items-start justify-between gap-4">
-<div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-600 mb-2 truncate">
                   {stat.label}
                 </p>
@@ -137,7 +138,7 @@ className="bg-white rounded-card p-5 shadow-card hover:shadow-card-hover transit
                   </div>
                 )}
               </div>
-<div className={cn(
+              <div className={cn(
                 "w-12 h-12 rounded-lg bg-gradient-to-br flex-shrink-0",
                 stat.bgGradient,
                 "flex items-center justify-center shadow-lg"
@@ -153,140 +154,154 @@ className="bg-white rounded-card p-5 shadow-card hover:shadow-card-hover transit
         ))}
       </div>
 
-      {/* Charts Row */}
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Main Dashboard Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Completion Overview */}
-<div className="bg-white rounded-card p-6 shadow-card">
-          <div className="flex items-start justify-between mb-6 gap-4">
-            <h3 className="text-lg font-semibold text-gray-900 flex-1 min-w-0">
+        <div className="bg-white rounded-card p-8 shadow-card">
+          <div className="text-center">
+            <h3 className="text-xl font-semibold text-gray-900 mb-6">
               Completion Overview
             </h3>
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent flex-shrink-0">
-              {completionRate}%
-            </span>
-          </div>
-          
-<div className="flex items-center justify-center mb-6">
-            <div className="relative w-32 h-32">
+            
+            <div className="relative w-48 h-48 mx-auto mb-6">
               <Chart
-                options={donutOptions}
-                series={donutSeries}
+                options={circularOptions}
+                series={circularSeries}
                 type="donut"
-                height={128}
-                width={128}
+                height={192}
+                width={192}
               />
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="text-lg font-bold text-gray-900">{completionRate}%</div>
-                  <div className="text-xs text-gray-500">Complete</div>
+                  <div className="text-4xl font-bold text-gray-900 mb-1">
+                    {completionRate}%
+                  </div>
+                  <div className="text-sm text-gray-500 font-medium">
+                    Complete
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-3">
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full transition-all duration-1000 ease-out"
+                  style={{ width: `${completionRate}%` }}
+                />
+              </div>
+              
+              <p className="text-sm text-gray-600 font-medium">
+                {stats.completed || 0} of {stats.total || 0} tasks completed
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Weekly Progress */}
+        <div className="bg-white rounded-card p-8 shadow-card">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <h3 className="text-xl font-semibold text-gray-900">
+                Weekly Progress
+              </h3>
+              <ApperIcon name="TrendingUp" size={20} className="text-primary-500" />
+            </div>
+            
+            <div className="mb-8">
+              <Chart
+                options={areaOptions}
+                series={areaSeries}
+                type="area"
+                height={120}
+              />
+            </div>
+            
+            <div className="grid grid-cols-2 gap-6">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-gray-900 mb-2">
+                  {taskVelocity}
+                </div>
+                <div className="text-sm font-medium text-gray-500">
+                  Tasks/Day
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-gray-900 mb-2">
+                  {avgCompletionTime}h
+                </div>
+                <div className="text-sm font-medium text-gray-500">
+                  Average Time
                 </div>
               </div>
             </div>
           </div>
-          
-<div className="w-full bg-gray-200 rounded-full h-3 mb-3">
-            <div 
-              className="bg-gradient-to-r from-primary-500 to-secondary-500 h-3 rounded-full transition-all duration-700 ease-out"
-              style={{ width: `${completionRate}%` }}
-            />
-          </div>
-          
-          <p className="text-sm text-gray-600 text-center">
-            {stats.completed} of {stats.total} tasks completed
-          </p>
         </div>
 
-        {/* Productivity Trends */}
-<div className="bg-white rounded-card p-6 shadow-card">
-          <div className="flex items-start justify-between mb-6 gap-4">
-            <h3 className="text-lg font-semibold text-gray-900 flex-1 min-w-0">
-              Weekly Progress
+        {/* Today's Detailed Progress */}
+        <div className="bg-white rounded-card p-8 shadow-card">
+          <div className="text-center">
+            <h3 className="text-xl font-semibold text-gray-900 mb-6">
+              Today's Detailed Progress
             </h3>
-            <div className="flex items-center text-sm text-gray-600 flex-shrink-0 gap-1">
-              <ApperIcon name="TrendingUp" size={16} />
-              <span>7 Days</span>
+            
+            <div className="flex items-center justify-center gap-6 mb-8">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-primary-500 rounded-full"></div>
+                <span className="text-sm font-medium text-gray-600">Completed</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
+                <span className="text-sm font-medium text-gray-600">Remaining</span>
+              </div>
             </div>
-          </div>
-          
-<div className="mb-6">
-            <Chart
-              options={areaChartOptions}
-              series={[{
-                name: 'Tasks Completed',
-                data: productivityData
-              }]}
-              type="area"
-              height={120}
-            />
-          </div>
-          
-<div className="grid grid-cols-2 gap-6 text-center">
-            <div className="min-w-0">
-              <div className="text-2xl font-bold text-gray-900 truncate">{taskVelocity}</div>
-              <div className="text-xs text-gray-500">Tasks/Day</div>
-            </div>
-            <div className="min-w-0">
-              <div className="text-2xl font-bold text-gray-900 truncate">{avgCompletionTime}h</div>
-              <div className="text-xs text-gray-500">Avg Time</div>
-            </div>
-          </div>
-        </div>
-      </div>
+            
+            <div className="space-y-6">
+              {/* Overall Progress */}
+              <div>
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-sm font-semibold text-gray-700">Overall Tasks</span>
+                  <span className="text-sm font-bold text-gray-900">
+                    {stats.completed || 0}/{stats.total || 0}
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div 
+                    className="bg-gradient-to-r from-primary-500 to-secondary-500 h-3 rounded-full transition-all duration-1000 ease-out"
+                    style={{ width: `${completionRate}%` }}
+                  />
+                </div>
+              </div>
 
-      {/* Detailed Progress Bar */}
-<div className="bg-white rounded-card p-6 shadow-card">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
-          <h3 className="text-lg font-semibold text-gray-900">
-            Today's Detailed Progress
-          </h3>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-primary-500 rounded-full flex-shrink-0"></div>
-              <span className="text-sm text-gray-600">Completed</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-gray-300 rounded-full flex-shrink-0"></div>
-              <span className="text-sm text-gray-600">Remaining</span>
-            </div>
-          </div>
-        </div>
-        
-<div className="space-y-4">
-          {/* Overall Progress */}
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-gray-700">Overall</span>
-              <span className="text-sm text-gray-500 font-medium">{stats.completed}/{stats.total}</span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-3">
-              <div 
-                className="bg-gradient-to-r from-primary-500 to-secondary-500 h-3 rounded-full transition-all duration-700 ease-out"
-                style={{ width: `${completionRate}%` }}
-              />
-            </div>
-          </div>
-          {/* High Priority Progress */}
-{stats.highPriority > 0 && (
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium text-gray-700">High Priority</span>
-                <span className="text-sm text-gray-500 font-medium">{stats.highPriorityCompleted || 0}/{stats.highPriority}</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-3">
-                <div 
-                  className="bg-gradient-to-r from-error-500 to-error-600 h-3 rounded-full transition-all duration-700 ease-out"
-                  style={{ 
-                    width: `${stats.highPriority > 0 ? Math.round(((stats.highPriorityCompleted || 0) / stats.highPriority) * 100) : 0}%` 
-                  }}
-                />
+              {/* High Priority Progress */}
+              {stats.highPriority > 0 && (
+                <div>
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-sm font-semibold text-gray-700">High Priority</span>
+                    <span className="text-sm font-bold text-error-600">
+                      {stats.highPriorityCompleted || 0}/{stats.highPriority}
+                    </span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div 
+                      className="bg-gradient-to-r from-error-500 to-error-600 h-3 rounded-full transition-all duration-1000 ease-out"
+                      style={{ 
+                        width: `${stats.highPriority > 0 ? Math.round(((stats.highPriorityCompleted || 0) / stats.highPriority) * 100) : 0}%` 
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="pt-4 border-t border-gray-100">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-600">Productivity Score</span>
+                  <span className="text-lg font-bold text-primary-600">
+                    {Math.min(Math.round(completionRate * 1.2), 100)}%
+                  </span>
+                </div>
               </div>
             </div>
-          )}
-        </div>
-<div className="mt-6 pt-4 border-t border-gray-100">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">Productivity Score</span>
-            <span className="font-semibold text-primary-600">{Math.min(Math.round(completionRate * 1.2), 100)}%</span>
           </div>
         </div>
       </div>
