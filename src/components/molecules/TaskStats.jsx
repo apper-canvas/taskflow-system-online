@@ -106,9 +106,9 @@ const TaskStats = ({ stats, className }) => {
   }];
 
   return (
-    <div className={cn("space-y-8", className)}>
+<div className={cn("space-y-6", className)}>
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+<div className="grid grid-cols-1 gap-3">
         {statCards.map((stat) => (
           <div
             key={stat.label}
@@ -155,15 +155,15 @@ const TaskStats = ({ stats, className }) => {
       </div>
 
       {/* Main Dashboard Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div className="space-y-6">
         {/* Completion Overview */}
-        <div className="bg-white rounded-card p-8 shadow-card">
+<div className="bg-gray-50 rounded-card p-4">
           <div className="text-center">
-            <h3 className="text-xl font-semibold text-gray-900 mb-6">
+<h3 className="text-base font-semibold text-gray-900 mb-4">
               Completion Overview
             </h3>
             
-            <div className="relative w-48 h-48 mx-auto mb-6">
+<div className="relative w-32 h-32 mx-auto mb-4">
               <Chart
                 options={circularOptions}
                 series={circularSeries}
@@ -174,16 +174,16 @@ const TaskStats = ({ stats, className }) => {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-4xl font-bold text-gray-900 mb-1">
-                    {completionRate}%
+{completionRate}%
                   </div>
-                  <div className="text-sm text-gray-500 font-medium">
+                  <div className="text-xs text-gray-500 font-medium">
                     Complete
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="space-y-3">
+<div className="space-y-2">
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
                   className="bg-gradient-to-r from-primary-500 to-secondary-500 h-2 rounded-full transition-all duration-1000 ease-out"
@@ -199,16 +199,16 @@ const TaskStats = ({ stats, className }) => {
         </div>
 
         {/* Weekly Progress */}
-        <div className="bg-white rounded-card p-8 shadow-card">
+<div className="bg-gray-50 rounded-card p-4">
           <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-6">
+<div className="flex items-center justify-center gap-2 mb-4">
               <h3 className="text-xl font-semibold text-gray-900">
                 Weekly Progress
               </h3>
               <ApperIcon name="TrendingUp" size={20} className="text-primary-500" />
             </div>
             
-            <div className="mb-8">
+<div className="mb-4">
               <Chart
                 options={areaOptions}
                 series={areaSeries}
@@ -216,7 +216,6 @@ const TaskStats = ({ stats, className }) => {
                 height={120}
               />
             </div>
-            
             <div className="grid grid-cols-2 gap-6">
               <div className="text-center">
                 <div className="text-3xl font-bold text-gray-900 mb-2">
@@ -225,7 +224,7 @@ const TaskStats = ({ stats, className }) => {
                 <div className="text-sm font-medium text-gray-500">
                   Tasks/Day
                 </div>
-              </div>
+</div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-gray-900 mb-2">
                   {avgCompletionTime}h
@@ -239,13 +238,13 @@ const TaskStats = ({ stats, className }) => {
         </div>
 
         {/* Today's Detailed Progress */}
-        <div className="bg-white rounded-card p-8 shadow-card">
+<div className="bg-gray-50 rounded-card p-4">
           <div className="text-center">
             <h3 className="text-xl font-semibold text-gray-900 mb-6">
               Today's Detailed Progress
             </h3>
             
-            <div className="flex items-center justify-center gap-6 mb-8">
+<div className="flex items-center justify-center gap-4 mb-4">
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-primary-500 rounded-full"></div>
                 <span className="text-sm font-medium text-gray-600">Completed</span>
@@ -256,9 +255,9 @@ const TaskStats = ({ stats, className }) => {
               </div>
             </div>
             
-            <div className="space-y-6">
+<div className="space-y-3">
               {/* Overall Progress */}
-              <div>
+<div>
                 <div className="flex justify-between items-center mb-3">
                   <span className="text-sm font-semibold text-gray-700">Overall Tasks</span>
                   <span className="text-sm font-bold text-gray-900">
@@ -276,7 +275,7 @@ const TaskStats = ({ stats, className }) => {
               {/* High Priority Progress */}
               {stats.highPriority > 0 && (
                 <div>
-                  <div className="flex justify-between items-center mb-3">
+<div className="flex justify-between items-center mb-2">
                     <span className="text-sm font-semibold text-gray-700">High Priority</span>
                     <span className="text-sm font-bold text-error-600">
                       {stats.highPriorityCompleted || 0}/{stats.highPriority}
@@ -293,7 +292,7 @@ const TaskStats = ({ stats, className }) => {
                 </div>
               )}
 
-              <div className="pt-4 border-t border-gray-100">
+<div className="pt-3 border-t border-gray-200">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium text-gray-600">Productivity Score</span>
                   <span className="text-lg font-bold text-primary-600">

@@ -20,8 +20,8 @@ const CategoryFilter = ({ selectedCategories = [], onCategoryToggle }) => {
   }
 
   return (
-    <div className="space-y-3">
-      <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+<div className="space-y-2">
+      <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
         Categories
       </h3>
       <div className="space-y-2">
@@ -31,9 +31,9 @@ const CategoryFilter = ({ selectedCategories = [], onCategoryToggle }) => {
           return (
             <button
               key={category.Id}
-              onClick={() => onCategoryToggle(category.name)}
-className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all duration-200 hover:bg-gray-50 ${
-                isSelected ? "bg-primary-50 border-2 border-primary-200" : "border-2 border-transparent"
+onClick={() => onCategoryToggle(category.name)}
+              className={`flex items-center gap-2 w-full p-2 rounded-lg transition-all duration-200 hover:bg-gray-50 ${
+                isSelected ? "bg-primary-50 border border-primary-200" : "border border-transparent"
               }`}
             >
               <div
@@ -45,7 +45,7 @@ className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all duratio
                 size={14} 
                 className="text-gray-500"
               />
-<span className={`text-sm font-medium flex-1 text-left min-w-0 truncate ${
+<span className={`text-xs font-medium flex-1 text-left min-w-0 truncate ${
                 isSelected ? "text-primary-700" : "text-gray-700"
               }`}>
                 {category.name}
